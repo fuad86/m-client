@@ -69,11 +69,5 @@ namespace mConsole
             Environment.Exit(0);
         }
 
-        [CommandHandlerAtribute("Mail", "Get")]
-        public static void mailGet()
-        {
-            wclient.GetMail();
-        }
-
     }
 }
