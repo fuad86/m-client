@@ -19,18 +19,18 @@ namespace mClient
             Password = "ORZECH";
             //Host = "logon.unitedwow.com";
             //Host = "eu.logon.worldofwarcraft.com";
-            Host = "realm.neverendless-wow.com";
+            Host = "logon.molten-wow.com";
             //Host = "localhost";
 
             Version.major = 3;
-            Version.minor = 1;
+            Version.minor = 3;
             Version.update = 3;
-            Version.build = 9947;
+            Version.build = 11723;
 
 
             Retail = false;
 
-            LogFilter = 0x0000000011000000;
+            LogFilter = 0x0000000000000000;
             LogToFile = true;
         }
     }

@@ -7,7 +7,7 @@ namespace mClient.Constants
 {
     public enum LoginErrorCode : byte
     {
-        ESPONSE_SUCCESS = 0,
+        RESPONSE_SUCCESS = 0,
         RESPONSE_FAILURE = 1,
         RESPONSE_CANCELLED = 2,
         RESPONSE_DISCONNECTED = 3,
@@ -68,7 +68,6 @@ namespace mClient.Constants
         CHAR_CREATE_EXPANSION_CLASS = 58,
         CHAR_CREATE_LEVEL_REQUIREMENT = 59,
         CHAR_CREATE_UNIQUE_CLASS_LIMIT = 60,//
-
         CHAR_DELETE_IN_PROGRESS = 61,
         CHAR_DELETE_SUCCESS = 62,
         CHAR_DELETE_FAILED = 63,

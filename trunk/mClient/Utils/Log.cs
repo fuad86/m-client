@@ -8,35 +8,29 @@ namespace mClient.Shared
 {
     public static class Log
     {
-        static StreamWriter packetFile = File.AppendText("log_packets.txt");
-        static StreamWriter logFile = File.AppendText("log_all.txt");
-
         public static void WriteLine(LogType type, string format, params object[] parameters)
-        {
+        {          
 
-
-            format = string.Format("[{0}][{1}]{2}", Time.GetTime(), type, format);
+            format = string.Format("[{0}][{1}]{2}", Time.GetTime(), type, (string)format);
             string msg = string.Format(format, parameters);
 
             if (Config.LogToFile)
             {
                 if (type == LogType.Packet)
                 {
+                    StreamWriter packetFile = File.AppendText("log_packets.txt");
                     packetFile.WriteLine(parameters[0].ToString());
                     packetFile.Flush();
-                }
-                else
-                {
-                    logFile.WriteLine(msg);
-                    packetFile.Flush();
+                    packetFile.Close();
                 }
             }
+
+
 
             if (((UInt32)type & Config.LogFilter) > 0)
                 return;
             else
                 mCore.Event(new Event(EventType.EVENT_LOG, "0", new object[] { msg }));
-
         }
 
     }

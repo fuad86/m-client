@@ -18,9 +18,10 @@ namespace mClient.Clients
         [PacketHandlerAtribute(WorldServerOpCode.SMSG_AUTH_CHALLENGE)]
         public void HandleAuthChallange(PacketIn packet)
         {
-                ServerSeed = packet.ReadUInt32();
-                ClientSeed = (UInt32)0;
-                DoAuthSession();
+            packet.ReadUInt32();
+            ServerSeed = packet.ReadUInt32();
+            ClientSeed = (UInt32)0;
+            DoAuthSession();
 
         }
 
@@ -114,6 +115,7 @@ namespace mClient.Clients
             try
             {
                 PacketOut packet = new PacketOut(WorldServerOpCode.CMSG_AUTH_SESSION);
+                
 
                 Sha1Hash sha = new Sha1Hash();
                 sha.Update(mUsername);
@@ -129,6 +131,7 @@ namespace mClient.Clients
                 packet.Write(mUsername);
                 packet.Write((UInt32)0);
                 packet.Write(ClientSeed);
+                packet.Write((UInt64)0);
                 packet.Write(Digest);
 
 
@@ -153,7 +156,7 @@ namespace mClient.Clients
 
                 Send(packet);
 
-                //mKey = KeyGenerator.GenerateKey(mKey);
+                
                 mCrypt = new PacketCrypt(mKey);
                 mCrypt.Init();
             }

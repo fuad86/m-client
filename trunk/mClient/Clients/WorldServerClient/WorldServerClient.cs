@@ -143,23 +143,33 @@ namespace mClient.Clients
 
         public void Send(PacketOut packet)
         {
-            if (!Connected)
-                return;
-            Log.WriteLine(LogType.Network, "Sending packet: {0}", packet.packetId);
-            if (!Connected)
-                return;
-            Byte[] Data = packet.ToArray();
+            try
+            {
+                if (!Connected)
+                    return;
+                Log.WriteLine(LogType.Network, "Sending packet: {0}", packet.packetId);
+                if (!Connected)
+                    return;
+                Byte[] Data = packet.ToArray();
 
-            int Length = Data.Length;
-            byte[] Packet = new byte[2 + Length];
-            Packet[0] = (byte)(Length >> 8);
-            Packet[1] = (byte)(Length & 0xff);
-            Data.CopyTo(Packet, 2);
-            mCrypt.Encrypt(Packet,0, 6);
-            //While writing this part of code I had a strange feeling of Deja-Vu or whatever it's called :>
-                  
-            mSocket.Send(Packet);
-            //Log.WriteLine(LogType.Packet,  packet.ToHex());
+                int Length = Data.Length;
+                byte[] Packet = new byte[2 + Length];
+                Packet[0] = (byte)(Length >> 8);
+                Packet[1] = (byte)(Length & 0xff);
+                Data.CopyTo(Packet, 2);
+                mCrypt.Encrypt(Packet, 0, 6);
+                //While writing this part of code I had a strange feeling of Deja-Vu or whatever it's called :>
+
+                Log.WriteLine(LogType.Packet,"{0}", packet.ToHex());
+                mSocket.Send(Packet);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(LogType.Error, "Exception Occured");
+                Log.WriteLine(LogType.Error, "Message: {0}", ex.Message);
+                Log.WriteLine(LogType.Error, "Stacktrace: {0}", ex.StackTrace);
+            }
+            
         }
 
         public void StartHeartbeat()
@@ -171,7 +181,9 @@ namespace mClient.Clients
 
         public void HandlePacket(PacketIn packet)
         {
+            //Log.WriteLine(LogType.Packet, "{0}", packet.ToHex());
             pHandler.HandlePacket(packet);
+           
         }
 
         public void Disconnect()
@@ -182,7 +194,7 @@ namespace mClient.Clients
 
         public void HardDisconnect()
         {
-            if (mSocket.Connected && mSocket != null)
+            if (mSocket != null && mSocket.Connected)
                 mSocket.Close();
             
             if (movementMgr != null)
