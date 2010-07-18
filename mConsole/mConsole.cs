@@ -33,10 +33,7 @@ namespace mConsole
             mCore.Init(EventHandler);
             CommandHandler.Initialize();
 
-            Log.WriteLine(LogType.Error, "{0}", (int)UpdateFields.FIELDS_MAX);
-
-
-            
+                     
 
             while (true)
             {

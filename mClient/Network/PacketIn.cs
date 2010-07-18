@@ -88,9 +88,10 @@ namespace mClient.Network
         public string ToHex()
         {
             StringBuilder hexDump = new StringBuilder();
+            byte[] packetData = ToArray();
 
             hexDump.Append('\n');
-            hexDump.Append("{Server->Client} " + string.Format("Packet: ({0}) {1} PacketSize = {2}\n" +
+            hexDump.Append("{Client<-Server} " + string.Format("Packet: ({0}) {1} PacketSize = {2}\n" +
                                                        "|------------------------------------------------|----------------|\n" +
                                                        "|00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F |0123456789ABCDEF|\n" +
                                                        "|------------------------------------------------|----------------|\n",

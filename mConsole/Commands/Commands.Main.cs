@@ -35,6 +35,11 @@ namespace mConsole
             int x = Convert.ToInt32(c[0]) - 1;
             try
             {
+                if (lclient == null || lclient.Connected == false || lclient.Realmlist.Length < 1)
+                {
+                    Log.WriteLine(LogType.Error, "Please connect to the logon server first.");
+                    return;
+                }
                 lclient.HardDisconnect();
                 wclient = new WorldServerClient(Config.Login, lclient.Realmlist[x], lclient.mKey);
                 wclient.Connect();

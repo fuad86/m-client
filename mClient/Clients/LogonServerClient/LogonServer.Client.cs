@@ -277,13 +277,15 @@ namespace mClient.Clients
         [PacketHandlerAtribute(LogonServerOpCode.AUTH_LOGON_PROOF)]
         public void HandleLogonProof(PacketIn packetIn)
         {
-            Log.WriteLine(LogType.Network, "{0}", packetIn.ToHex());
-            Log.WriteLine(LogType.Success, "Authenitcation successed. Requesting RealmList");
-            
-            //Retail server sends a loooooot of informations there!
-            RequestRealmlist();
-            pLoop.Stop();
-            
+            if (packetIn.ReadByte() == 0x00)
+            {
+                Log.WriteLine(LogType.Success, "Authenitcation successed. Requesting RealmList");
+
+                //Retail server sends a loooooot of informations there!
+                RequestRealmlist();
+                pLoop.Stop();
+            }
+
         }
 
         [PacketHandlerAtribute(LogonServerOpCode.REALM_LIST)]
@@ -377,6 +379,7 @@ namespace mClient.Clients
 
         public void HandlePacket(PacketIn packet)
         {
+            Log.WriteLine(LogType.Packet, "{0}", packet.ToHex());
             pHandler.HandlePacket(packet);
         }
 

@@ -14,7 +14,7 @@ namespace mClient.Clients
 {
     public partial class WorldServerClient
     {
-        
+        /*
 		[PacketHandlerAtribute(WorldServerOpCode.SMSG_COMPRESSED_UPDATE_OBJECT)]
 		public void HandleCompressedObjectUpdate(PacketIn packet)
 		{
@@ -95,6 +95,7 @@ namespace mClient.Clients
                 }
               
         }
+        */
 
         public void HandleUpdateMovementBlock(PacketIn packet, Object newObject)
         {
